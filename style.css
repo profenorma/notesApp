@@ -1,0 +1,5 @@
+body { font-family: system-ui, -apple-system, sans-serif; background-color: #f4f7f6; color: #333; text-align: center; margin: 0; padding: 40px 20px; }
+header { margin-bottom: 30px; }
+nav button { background-color: #0066cc; color: white; border: none; padding: 10px 18px; margin: 5px; border-radius: 6px; cursor: pointer; font-size: 1rem; font-weight: bold; }
+nav button:hover { background-color: #004999; }
+#content-card { background: white; max-width: 600px; margin: 0 auto; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
