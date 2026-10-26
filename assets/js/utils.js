@@ -3,4 +3,4 @@ export const Storage = {
     set: (key, val) => localStorage.setItem(key, JSON.stringify(val))
 };
 
-export const formatDate = () => new Date().toLocaleDateString();
+export const formatDate = () => new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
