@@ -3,25 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profenorma A4 Vector Notebook</title>
+    <title>Profenorma - A4 Math Notebook Reader</title>
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body onload="initApp()">
     <header>
-        <h1>Profenorma A4 Structured Digital Notebook</h1>
-        <p>Grid-aligned vector layout with standardized margins and headers</p>
+        <h1>Profenorma Interactive Digital Notebook</h1>
+        <p>A4 Grid Vector Layout (Resolution Independent)</p>
         <nav id="section-nav"></nav>
     </header>
 
     <div class="controls">
-        <h2 id="currentSectionTitle" style="margin: 0; font-size: 1.2rem;">Section 4A</h2>
-        <button onclick="adjustZoom(0.25)">?? Zoom In (+)</button>
-        <button onclick="adjustZoom(-0.25)">?? Zoom Out (-)</button>
+        <h2 id="currentSectionTitle" style="margin:0; font-size:1.2rem;">Section 4A</h2>
+        <button onclick="adjustZoom(0.2)">?? Zoom In (+)</button>
+        <button onclick="adjustZoom(-0.2)">?? Zoom Out (-)</button>
         <button onclick="addNote()" style="background:#28a745; color:white; border:none; padding:8px 14px; border-radius:6px; cursor:pointer;">+ Add Note</button>
     </div>
 
-    <div class="vector-viewport">
-        <svg id="readerSvg" viewBox="0 0 700 990">
+    <div class="vector-viewport" style="max-width:820px; height:800px; overflow:auto;">
+        <svg id="readerSvg" viewBox="0 0 792 1056" style="width:100%; height:auto;">
             <g id="svgContent" transform="scale(1)"></g>
         </svg>
     </div>

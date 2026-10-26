@@ -14,60 +14,77 @@ window.initApp = () => {
     loadSection('4A');
 };
 
+function generateGridBackground() {
+    let lines = <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse">
+        <path d="M 24 0 L 0 0 0 24" fill="none" stroke="#dbeafe" stroke-width="1"/>
+    </pattern>
+    <rect width="792" height="1056" fill="url(#grid)" />
+    <line x1="710" y1="0" x2="710" y2="1056" stroke="#ef4444" stroke-width="2"/>;
+    return lines;
+}
+
 function loadSection(sec) {
-    document.getElementById('currentSectionTitle').innerText = 'Section ' + sec + ' (A4 Grid Notes)';
+    document.getElementById('currentSectionTitle').innerText = 'Section ' + sec + ' (A4 Math Grid Note)';
     const svgGroup = document.getElementById('svgContent');
     const notes = Storage.get('notes_' + sec);
-    const currentDate = formatDate();
-    
-    let html = '<rect width="700" height="990" fill="#ffffff"/>';
-    
-    // Draw A4 Grid lines (spacing 25px)
-    for (let x = 40; x < 660; x += 25) {
-        html += <line x1="" y1="0" x2="" y2="990" stroke="#e0f0ff" stroke-width="1"/>;
-    }
-    for (let y = 40; y < 950; y += 25) {
-        html += <line x1="40" y1="" x2="660" y2="y" stroke="#e0f0ff" stroke-width="1"/>;
-    }
 
-    // Right/Left Red Margin Line
-    html += <line x1="630" y1="0" x2="630" y2="990" stroke="#ffcccc" stroke-width="2"/>;
+    let html = <rect width="792" height="1056" fill="#ffffff" rx="4" stroke="#cbd5e1" stroke-width="2"/>;
+    html += generateGridBackground();
 
-    // Header Template (matching A4 notebook style)
-    html += <text x="50" y="55" font-family="sans-serif" font-size="14" fill="#0066cc">Name: ________________________</text>;
-    html += <text x="420" y="55" font-family="sans-serif" font-size="14" fill="#0066cc"></text>;
-    html += <text x="50" y="85" font-family="sans-serif" font-size="14" fill="#0066cc">Week 2.1</text>;
-    html += <text x="530" y="85" font-family="sans-serif" font-size="14" fill="#0066cc">4th Grade "__"</text>;
+    // Standardized Header Metadata
+    html += <text x="36" y="48" font-family="'Comic Sans MS', sans-serif" font-size="18" fill="#1e40af">Name: ____________________</text>;
+    html += <text x="500" y="48" font-family="'Comic Sans MS', sans-serif" font-size="18" fill="#1e40af">Monday, October 12, 2026</text>;
+    html += <text x="36" y="84" font-family="'Comic Sans MS', sans-serif" font-size="18" fill="#1e40af">Week 2.1</text>;
+    html += <text x="560" y="84" font-family="'Comic Sans MS', sans-serif" font-size="18" fill="#1e40af">4th Grade "___"</text>;
 
-    // Title
-    html += <text x="350" y="130" font-family="sans-serif" font-size="22" font-weight="bold" text-anchor="middle" fill="#222">Classroom Notes - Section </text>;
-    html += <line x1="150" y1="145" x2="550" y2="145" stroke="#0066cc" stroke-width="2"/>;
+    // Centered Title Block
+    html += <text x="396" y="140" text-anchor="middle" font-family="sans-serif" font-size="28" font-weight="bold" fill="#1e293b">Inverse Operations</text>;
+    html += <text x="396" y="180" text-anchor="middle" font-family="sans-serif" font-size="22" font-weight="bold" fill="#2563eb">Division and Multiplication</text>;
 
+    // Goal & Definitions
+    html += <text x="36" y="240" font-family="sans-serif" font-size="18" font-weight="bold" fill="#dc2626">Goal: <tspan fill="#1e293b" font-weight="normal">Apply the inverse relationship between division and multiplication to solve</tspan></text>;
+    html += <text x="36" y="270" font-family="sans-serif" font-size="18" fill="#1e293b">division equations and verify quotients with multiplication.</text>;
+
+    html += <text x="36" y="330" font-family="sans-serif" font-size="20" font-weight="bold" fill="#2563eb" text-decoration="underline">Definitions</text>;
+    html += <text x="36" y="370" font-family="sans-serif" font-size="18" fill="#2563eb">• Division and Multiplication: <tspan fill="#1e293b">Are inverse operations. Dividing partitions a total</tspan></text>;
+    html += <text x="56" y="400" font-family="sans-serif" font-size="18" fill="#1e293b">into equal parts, and multiplying combines those equal parts to restore the original whole.</text>;
+
+    // Render Section Notes / Dynamic Rows
+    let startY = 460;
     if (notes.length === 0) {
-        html += <text x="50" y="200" font-family="sans-serif" font-size="16" fill="#666">• No entries for this section yet. Click '+ Add Note' below.</text>;
+        html += <text x="36" y="" font-family="sans-serif" font-size="18" fill="#64748b">• No additional notes added for Section  yet.</text>;
     } else {
         notes.forEach((n, idx) => {
-            let yPos = 200 + (idx * 70);
-            html += <rect x="50" y="" width="560" height="55" rx="6" fill="#f8fbff" stroke="#bce0fd" stroke-width="1"/>;
-            html += <text x="65" y="" font-family="sans-serif" font-size="12" fill="#888"></text>;
-            html += <text x="65" y="" font-family="sans-serif" font-size="16" fill="#333">• </text>;
+            let rowY = startY + (idx * 50);
+            html += <text x="36" y="" font-family="sans-serif" font-size="18" fill="#1e293b">•  <tspan fill="#94a3b8" font-size="14">()</tspan></text>;
         });
     }
+
+    // Standardized Rule Container Box
+    html += <rect x="36" y="820" width="650" height="180" fill="none" rx="12" stroke="#2563eb" stroke-width="2"/>;
+    html += <text x="60" y="860" font-family="sans-serif" font-size="20" font-weight="bold" fill="#1e293b">Original:</text>;
+    html += <text x="520" y="860" font-family="sans-serif" font-size="20" font-weight="bold" fill="#1e293b">Inverse:</text>;
+    html += <text x="60" y="900" font-family="sans-serif" font-size="20" font-weight="bold" fill="#2563eb">56 ÷ 8 = 7</text>;
+    html += <text x="330" y="910" font-family="sans-serif" font-size="22" fill="#dc2626">?</text>;
+    html += <text x="520" y="900" font-family="sans-serif" font-size="20" font-weight="bold" fill="#2563eb">7 × 8 = 56</text>;
+    html += <text x="60" y="940" font-family="sans-serif" font-size="20" font-weight="bold" fill="#2563eb">56 ÷ 7 = 8</text>;
+    html += <text x="520" y="940" font-family="sans-serif" font-size="20" font-weight="bold" fill="#2563eb">8 × 7 = 56</text>;
 
     svgGroup.innerHTML = html;
     window.currentSec = sec;
 }
 
 window.addNote = () => {
-    const text = prompt('Enter note content for Section ' + (window.currentSec || '4A') + ':');
+    const text = prompt('Enter a note/rule line for Section ' + (window.currentSec || '4A') + ':');
     if (!text || !text.trim()) return;
     const notes = Storage.get('notes_' + (window.currentSec || '4A'));
     notes.push({ text: text.trim(), date: formatDate() });
-    Storage.setItem('notes_' + (window.currentSec || '4A'), notes);
+    Storage.set('notes_' + (window.currentSec || '4A'), notes);
     loadSection(window.currentSec || '4A');
 };
 
 window.adjustZoom = (delta) => {
     currentZoom = Math.max(0.5, Math.min(3.0, currentZoom + delta));
-    document.getElementById('svgContent').setAttribute('transform', 'scale(' + currentZoom + ')');
+    const group = document.getElementById('svgContent');
+    group.setAttribute('transform', scale());
 };
