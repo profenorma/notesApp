@@ -3,68 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profenorma - Notes App</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Profenorma Vector Digital Reader</title>
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body>
+<body onload="initApp()">
     <header>
-        <h1>Profenorma Classroom Notes</h1>
-        <p>Select your section below:</p>
-        <nav id="section-nav">
-            <button onclick="selectSection('4A')">4A</button>
-            <button onclick="selectSection('4B')">4B</button>
-            <button onclick="selectSection('4C')">4C</button>
-            <button onclick="selectSection('4D')">4D</button>
-            <button onclick="selectSection('4E')">4E</button>
-            <button onclick="selectSection('5B')">5B</button>
-        </nav>
+        <h1>Profenorma Interactive Digital Book</h1>
+        <p>Resolution-independent vector text rendering (Susaeta-style zoomable layout)</p>
+        <nav id="section-nav"></nav>
     </header>
 
-    <main>
-        <section id="content-card">
-            <h2 id="section-title">Welcome</h2>
-            <p id="section-desc">Choose a section above to view and add classroom notes.</p>
-            
-            <div class="note-input-area" style="margin-top: 20px;">
-                <textarea id="quickNote" placeholder="Type a quick note for this section..." rows="3" style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #ccc;"></textarea>
-                <button onclick="saveNote()" style="margin-top: 8px; background: #28a745; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer;">Save Note</button>
-            </div>
+    <div class="controls">
+        <h2 id="currentSectionTitle" style="margin: 0; font-size: 1.2rem;">Section 4A</h2>
+        <button onclick="adjustZoom(0.25)">?? Zoom In (+)</button>
+        <button onclick="adjustZoom(-0.25)">?? Zoom Out (-)</button>
+        <button onclick="addNote()" style="background:#28a745; color:white; border:none; padding:8px 14px; border-radius:6px; cursor:pointer;">+ Add Note</button>
+    </div>
 
-            <div id="notes-list" style="margin-top: 20px; text-align: left;"></div>
-        </section>
-    </main>
+    <div class="vector-viewport">
+        <svg id="readerSvg" viewBox="0 0 700 900">
+            <g id="svgContent" transform="scale(1)"></g>
+        </svg>
+    </div>
 
-    <script>
-        let currentSec = '';
-        function selectSection(sec) {
-            currentSec = sec;
-            document.getElementById('section-title').innerText = 'Section ' + sec;
-            document.getElementById('section-desc').innerText = 'Managing notes and materials for Section ' + sec;
-            loadNotes();
-        }
-        function saveNote() {
-            if (!currentSec) { alert('Please select a section first!'); return; }
-            const text = document.getElementById('quickNote').value;
-            if (!text.trim()) return;
-            let notes = JSON.parse(localStorage.getItem('notes_' + currentSec) || '[]');
-            notes.push({ text, date: new Date().toLocaleDateString() });
-            localStorage.setItem('notes_' + currentSec, JSON.stringify(notes));
-            document.getElementById('quickNote').value = '';
-            loadNotes();
-        }
-        function loadNotes() {
-            if (!currentSec) return;
-            let notes = JSON.parse(localStorage.getItem('notes_' + currentSec) || '[]');
-            let listDiv = document.getElementById('notes-list');
-            listDiv.innerHTML = '<h3>Saved Notes:</h3>';
-            if (notes.length === 0) {
-                listDiv.innerHTML += '<p style="color: #666;">No notes saved for this section yet.</p>';
-                return;
-            }
-            notes.forEach((note) => {
-                listDiv.innerHTML += <div style="background: #f9f9f9; padding: 10px; margin-bottom: 8px; border-radius: 4px; border-left: 4px solid #0066cc;"><small style="color: #886;"></small><p style="margin: 4px 0 0 0;"></p></div>;
-            });
-        }
-    </script>
+    <script type="module" src="assets/js/app.js"></script>
 </body>
 </html>

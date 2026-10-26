@@ -1,0 +1,8 @@
+:root { --primary: #0066cc; --bg: #f4f7f6; --card-bg: #ffffff; --text: #333; }
+body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+header { text-align: center; margin-bottom: 20px; }
+nav button { background: var(--primary); color: white; border: none; padding: 10px 16px; margin: 4px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+nav button:hover { background: #004999; }
+.controls { display: flex; gap: 10px; align-items: center; margin-bottom: 15px; }
+.vector-viewport { width: 100%; max-width: 800px; height: 500px; border: 1px solid #ccc; background: var(--card-bg); border-radius: 8px; overflow: hidden; position: relative; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+svg#readerSvg { width: 100%; height: 100%; cursor: grab; user-select: none; }
